@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  TextInput,
 } from 'react-native';
 
 import {
@@ -25,13 +26,18 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 class App extends React.Component {
+  state = {
+
+  }
+
   render() {
     return(
       <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <View>
+        <View style={{alignItems: "center"}}>
           <Text style={styles.mainText}>Youtube Search</Text>
+          <TextInput style={styles.textInputStyle} placeholder="Enter your search"/>
         </View>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
@@ -117,7 +123,19 @@ const styles = StyleSheet.create({
   },
   mainText: {
     textAlign: "center",
-    fontSize: 20
+    fontSize: 30,
+    fontStyle: "italic",
+    fontWeight: "bold",
+    marginBottom: 19
+  },
+  textInputStyle: {
+    borderWidth: 0.25,
+    borderColor: "black",
+    width: "70%",
+    textAlign: "center",
+    fontSize: 18,
+    marginBottom: 13,
+    borderRadius: 10,
   }
 });
 
