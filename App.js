@@ -25,64 +25,50 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Video from './Video.js';
+
 class App extends React.Component {
   state = {
+    videos: [],
+  };
 
-  }
+  componentDidMount = () => {
+    fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyCqZ_-Q_sMnTjG3PXrHrn_piZ4bUeJt0_I`,
+    )
+      .then(data => data.json())
+      .then(json => {
+        console.log(json)
+        this.setState({videos: json.items});
+      });
+  };
 
   render() {
-    return(
+    return (
       <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <View style={{alignItems: "center"}}>
-          <Text style={styles.mainText}>Youtube Search</Text>
-          <TextInput style={styles.textInputStyle} placeholder="Enter your search"/>
-        </View>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.mainText}>Youtube Search</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="Enter your search"
+            />
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-    )
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <View style={styles.body}>
+              {this.state.videos.map(ele => (
+                <Video key={ele.etag} styles={styles} snippet={ele.snippet}/>
+              ))}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
+    );
   }
 }
-
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -122,21 +108,21 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   mainText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 30,
-    fontStyle: "italic",
-    fontWeight: "bold",
-    marginBottom: 19
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    marginBottom: 19,
   },
   textInputStyle: {
     borderWidth: 0.25,
-    borderColor: "black",
-    width: "70%",
-    textAlign: "center",
+    borderColor: 'black',
+    width: '70%',
+    textAlign: 'center',
     fontSize: 18,
     marginBottom: 13,
     borderRadius: 10,
-  }
+  },
 });
 
 export default App;
