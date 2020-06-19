@@ -30,6 +30,7 @@ import Video from './Video.js';
 class App extends React.Component {
   state = {
     videos: [],
+    updatedText: "",
   };
 
   componentDidMount = () => {
@@ -38,10 +39,13 @@ class App extends React.Component {
     )
       .then(data => data.json())
       .then(json => {
-        console.log(json)
         this.setState({videos: json.items});
       });
   };
+
+  textChanges = (text) => {
+    //This app is under development 
+  }
 
   render() {
     return (
@@ -53,6 +57,7 @@ class App extends React.Component {
             <TextInput
               style={styles.textInputStyle}
               placeholder="Enter your search"
+              onChangeText={(text) => this.textChanges(text)}
             />
           </View>
           <ScrollView
@@ -122,6 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 13,
     borderRadius: 10,
+    padding: 5
   },
 });
 
